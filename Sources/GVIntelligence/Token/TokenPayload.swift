@@ -1,7 +1,7 @@
 import Foundation
 
 /// Encodable mirror of the web SDK's `Signals` envelope
-/// (`packages/gs-web-sdk/src/types.ts`). Field names are snake_case so the
+/// (`packages/gv-web-sdk/src/types.ts`). Field names are snake_case so the
 /// sealed JSON matches the shape `fraud-check` / `_shared/device-signals.ts`
 /// already decrypt and consume — no backend change is required.
 ///

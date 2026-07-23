@@ -2,7 +2,7 @@ import Foundation
 import CryptoKit
 
 /// Random + identity helpers (mirror the web SDK's `util/sha256.ts`).
-enum GSRandom {
+enum GVRandom {
     static func uuid() -> String {
         UUID().uuidString.lowercased()
     }

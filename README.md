@@ -1,6 +1,6 @@
-# GS Intelligence — iOS SDK
+# Gamma Verify Intelligence — iOS SDK
 
-GS Intelligence helps you stop fraudsters from abusing your iOS app while giving
+Gamma Verify Intelligence helps you stop fraudsters from abusing your iOS app while giving
 you rich insight into every customer who uses it. By collecting device, network,
 location, behavioral, and tamper signals, the SDK helps you defend against
 account takeovers, multiple-account signups, and fraudulent payments.
@@ -36,7 +36,7 @@ your existing fraud-check endpoint works with **no backend changes**.
 In Xcode, go to **File → Add Package Dependencies…** and enter the repository URL:
 
 ```
-https://github.com/ewalletbotorg/gsgeo-ios-sdk-public
+https://github.com/ewalletbotorg/gverify-ios-sdk-public
 ```
 
 For the **Dependency Rule**, choose **Up to Next Major Version** and enter the
@@ -65,17 +65,17 @@ beyond the two lines of code below.
 ## Quick start
 
 ```swift
-import GSIntelligence
+import GVIntelligence
 
 // Step 1 — once, at app start (e.g. in your App init or AppDelegate)
-GS.configure(clientId: "YOUR_CLIENT_ID")
+GV.configure(clientId: "YOUR_CLIENT_ID")
 
 // Step 2 — per protected user action (login, checkout, signup)
 do {
-    let session = try await GS.getSession()
+    let session = try await GV.getSession()
     // Send `session` to YOUR backend (see "Sending the token to your backend").
     // Never call the GS fraud-check endpoint directly from the app.
-} catch GSError.gpsRequired(let state) {
+} catch GVError.gpsRequired(let state) {
     // Only thrown when configured with gps: .required
     print("location required, permission state: \(state ?? "unknown")")
 } catch {
@@ -87,10 +87,10 @@ do {
 
 ## Configuration options
 
-`GS.configure` accepts the following options. Only `clientId` is required.
+`GV.configure` accepts the following options. Only `clientId` is required.
 
 ```swift
-GS.configure(
+GV.configure(
     clientId: "YOUR_CLIENT_ID",
     gps: .prompt,          // .off | .silent | .prompt | .required
     behavior: true,        // always-on session-timing capture
@@ -147,8 +147,8 @@ For integration help, API keys, and documentation, contact your GS account team.
 ## Changelog
 
 ### 1.0.0
-- Initial public release of the GS Intelligence iOS SDK.
-- Two-step `GS.configure` / `GS.getSession` integration.
+- Initial public release of the Gamma Verify Intelligence iOS SDK.
+- Two-step `GV.configure` / `GV.getSession` integration.
 - Device, network, GPS, behavioral, and tamper signal collection.
 - GPS collector polls `CLLocationManager.location` as a fallback so a coordinate
   is returned even when `didUpdateLocations` never fires.
