@@ -14,12 +14,12 @@ enum Persistence {
     /// (drives `storage.persistent_id_present`).
     static func trueDeviceId(persist: Bool) -> (id: String, present: Bool) {
         guard persist else {
-            return (GVRandom.uuid(), false)
+            return (GSRandom.uuid(), false)
         }
         if let existing = read() {
             return (existing, true)
         }
-        let fresh = GVRandom.uuid()
+        let fresh = GSRandom.uuid()
         write(fresh)
         return (fresh, false)
     }

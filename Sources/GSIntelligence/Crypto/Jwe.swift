@@ -31,8 +31,8 @@ func base64urlDecode(_ string: String) -> Data? {
 ///   BASE64URL(header).BASE64URL(encKey).BASE64URL(iv).BASE64URL(ciphertext).BASE64URL(tag)
 /// - CEK: random AES-256-GCM key, wrapped with RSA-OAEP-256.
 /// - AAD: the ASCII bytes of the encoded protected header (per RFC 7516).
-func sealJwe(_ payload: TokenPayload, kid: String = GVKeys.activeKid) throws -> String {
-    guard let jwk = GVKeys.publicKeys[kid] else { throw JweError.unknownKid }
+func sealJwe(_ payload: TokenPayload, kid: String = GSKeys.activeKid) throws -> String {
+    guard let jwk = GSKeys.publicKeys[kid] else { throw JweError.unknownKid }
 
     // Protected header — values must match what `fraud-check` expects.
     let header = "{\"alg\":\"RSA-OAEP-256\",\"enc\":\"A256GCM\",\"kid\":\"\(kid)\",\"typ\":\"GSDS\"}"

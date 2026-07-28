@@ -1,6 +1,6 @@
-# GVDemo — example app
+# GSDemo — example app
 
-A minimal SwiftUI app that exercises the Gamma Verify Intelligence SDK end-to-end:
+A minimal SwiftUI app that exercises the GS Intelligence SDK end-to-end:
 
 - **Get Session** — seals a token. In sandbox mode (`sandbox: true` + a
   `gk_test_` key) the token is unencrypted so the app can pretty-print the
@@ -15,17 +15,17 @@ A minimal SwiftUI app that exercises the Gamma Verify Intelligence SDK end-to-en
 
 ## Run it
 
-This folder ships only the Swift sources (`GVDemoApp.swift`, `ContentView.swift`)
+This folder ships only the Swift sources (`GSDemoApp.swift`, `ContentView.swift`)
 to keep the repo free of a large, churn-prone `.xcodeproj`. Create the app
 shell once:
 
-1. Xcode → **File → New → Project… → iOS → App** (SwiftUI, name it `GVDemo`).
-2. Replace the generated `GVDemoApp.swift` / `ContentView.swift` with the files
-   in `GVDemo/`.
+1. Xcode → **File → New → Project… → iOS → App** (SwiftUI, name it `GSDemo`).
+2. Replace the generated `GSDemoApp.swift` / `ContentView.swift` with the files
+   in `GSDemo/`.
 3. **File → Add Package Dependencies…**
    - Local source of record: **Add Local…** and pick the repo root (where
      `Package.swift` lives).
-   - Or the public package: `https://github.com/ewalletbotorg/gverify-ios-sdk-public`
+   - Or the public package: `https://github.com/ewalletbotorg/gsgeo-ios-sdk-public`
 4. Add the GPS usage string to **Info.plist**:
 
    ```xml
@@ -33,7 +33,7 @@ shell once:
    <string>We use your location to help verify this device.</string>
    ```
 
-5. Set `clientId` in `GVDemoApp.swift`, build, and run on a device or simulator.
+5. Set `clientId` in `GSDemoApp.swift`, build, and run on a device or simulator.
 
 For real device-rule testing (VPN, screen capture, calls, jailbreak), run on a
 physical device — the simulator cannot produce those signals.
@@ -60,6 +60,6 @@ as it's available:
 GPS: lat=37.3349 lon=-122.0090 state=Optional("granted")
 ```
 
-Set `debug: true` in `GV.configure(...)` to log `[gv] gps: …` lines (authorization
+Set `debug: true` in `GS.configure(...)` to log `[gs] gps: …` lines (authorization
 changes, fixes, timeouts) in the Xcode console. If it still times out after
 setting a Custom Location, confirm on a physical device.

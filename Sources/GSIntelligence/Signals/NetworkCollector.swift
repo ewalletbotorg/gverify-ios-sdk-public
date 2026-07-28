@@ -14,7 +14,7 @@ enum NetworkCollector {
 
         let monitor = NWPathMonitor()
         let semaphore = DispatchSemaphore(value: 0)
-        let queue = DispatchQueue(label: "com.gammasweep.gvintelligence.net")
+        let queue = DispatchQueue(label: "com.gammasweep.gsintelligence.net")
 
         monitor.pathUpdateHandler = { path in
             if path.usesInterfaceType(.wifi) {

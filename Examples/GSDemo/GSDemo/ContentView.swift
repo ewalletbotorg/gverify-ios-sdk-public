@@ -1,5 +1,5 @@
 import SwiftUI
-import GVIntelligence
+import GSIntelligence
 
 /// Minimal demo screen exercising the three things you test during integration:
 ///   1. Get Session  — seal a token (sandbox=unencrypted, live=encrypted JWE)
@@ -46,7 +46,7 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Gamma Verify Intelligence Demo")
+            .navigationTitle("GS Intelligence Demo")
         }
     }
 
@@ -69,7 +69,7 @@ struct ContentView: View {
         status = "Collecting signals…"
         Task {
             do {
-                let session = try await GV.getSession()
+                let session = try await GS.getSession()
                 await MainActor.run {
                     token = session
                     signalJson = Self.decodeSandboxPayload(session) ?? ""
@@ -86,7 +86,7 @@ struct ContentView: View {
     }
 
     private func getDeviceId() {
-        deviceId = GV.getDeviceId()
+        deviceId = GS.getDeviceId()
         status = "Device ID read"
     }
 

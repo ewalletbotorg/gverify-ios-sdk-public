@@ -1,25 +1,24 @@
 // swift-tools-version:5.9
-// GVIntelligence iOS SDK — public tag 0.0.10 (branch-agnostic mirror trigger)
 import PackageDescription
 
 let package = Package(
-    name: "GVIntelligence",
+    name: "GSIntelligence",
     platforms: [
         .iOS(.v14)
     ],
     products: [
-        .library(name: "GVIntelligence", targets: ["GVIntelligence"])
+        .library(name: "GSIntelligence", targets: ["GSIntelligence"])
     ],
     targets: [
         .target(
-            name: "GVIntelligence",
+            name: "GSIntelligence",
             dependencies: [],
-            path: "Sources/GVIntelligence"
+            path: "Sources/GSIntelligence"
         ),
         .testTarget(
-            name: "GVIntelligenceTests",
-            dependencies: ["GVIntelligence"],
-            path: "Tests/GVIntelligenceTests"
+            name: "GSIntelligenceTests",
+            dependencies: ["GSIntelligence"],
+            path: "Tests/GSIntelligenceTests"
         )
     ]
 )

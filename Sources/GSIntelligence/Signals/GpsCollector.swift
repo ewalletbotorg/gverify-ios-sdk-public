@@ -18,8 +18,8 @@ final class GpsCollector: NSObject, CLLocationManagerDelegate {
     private var finished = false
     private var liveUpdating = false
 
-    /// When `true`, emit `[gv] gps: …` lines via `print` for Xcode console
-    /// debugging. Wired from `GVConfig.debug`.
+    /// When `true`, emit `[gs] gps: …` lines via `print` for Xcode console
+    /// debugging. Wired from `GSConfig.debug`.
     var debug = false
 
     /// Resolve a GPS block. `timeout` bounds the entire prompt + fix wait.
@@ -216,6 +216,6 @@ final class GpsCollector: NSObject, CLLocationManagerDelegate {
 
     private func log(_ message: String) {
         guard debug else { return }
-        print("[gv] gps: \(message)")
+        print("[gs] gps: \(message)")
     }
 }

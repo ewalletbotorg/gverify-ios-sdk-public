@@ -1,11 +1,11 @@
 import Foundation
 
-/// Gamma Verify Intelligence — native iOS SDK.
+/// GS Intelligence — native iOS SDK.
 ///
 /// Two-step integration:
 /// ```swift
-/// GV.configure(clientId: "YOUR_CLIENT_ID")          // once, at app start
-/// let session = try await GV.getSession()           // per protected action
+/// GS.configure(clientId: "YOUR_CLIENT_ID")          // once, at app start
+/// let session = try await GS.getSession()           // per protected action
 /// // send `session` to YOUR backend → forwards to /fraud-check
 /// ```
 ///
@@ -14,9 +14,9 @@ import Foundation
 /// them into a compact JWE that `fraud-check` decrypts with the existing private
 /// key — the token format is identical to the web SDK's, so no backend change
 /// is required.
-public enum GV {
+public enum GS {
     private static let stateLock = NSLock()
-    private static var config: GVConfig?
+    private static var config: GSConfig?
     private static var lastGps: GpsSignals?
 
     /// 5-minute token TTL — must mirror `_shared/device-token.ts`.
@@ -36,7 +36,7 @@ public enum GV {
         sessionId: String? = nil,
         maxWaitTime: TimeInterval = 4.0
     ) {
-        let cfg = GVConfig(
+        let cfg = GSConfig(
             clientId: clientId,
             sessionId: sessionId,
             gps: gps,
@@ -49,8 +49,8 @@ public enum GV {
         configure(cfg)
     }
 
-    /// Configure with a fully-built `GVConfig`.
-    public static func configure(_ cfg: GVConfig) {
+    /// Configure with a fully-built `GSConfig`.
+    public static func configure(_ cfg: GSConfig) {
         stateLock.lock()
         config = cfg
         stateLock.unlock()
@@ -67,21 +67,21 @@ public enum GV {
     /// user-action (login, checkout, signup). Tokens are one-time and expire in
     /// 5 minutes.
     public static func getSession() async throws -> String {
-        guard let cfg = currentConfig() else { throw GVError.notConfigured }
+        guard let cfg = currentConfig() else { throw GSError.notConfigured }
 
         let iat = epochMillis()
         let signals = await collectSignals(cfg)
 
         if cfg.gps == .required, signals.gps.latitude == nil || signals.gps.longitude == nil {
-            throw GVError.gpsRequired(permissionState: signals.gps.permission_state)
+            throw GSError.gpsRequired(permissionState: signals.gps.permission_state)
         }
 
         let payload = TokenPayload(
             v: 1,
-            sid: cfg.sessionId ?? GVRandom.uuid(),
+            sid: cfg.sessionId ?? GSRandom.uuid(),
             iat: iat,
             exp: iat + ttlMillis,
-            nonce: GVRandom.randomHex(16),
+            nonce: GSRandom.randomHex(16),
             collected_at: iat,
             signals: signals
         )
@@ -91,14 +91,14 @@ public enum GV {
             do {
                 return try sandboxToken(payload)
             } catch {
-                throw GVError.sealFailed(underlying: error)
+                throw GSError.sealFailed(underlying: error)
             }
         }
 
         do {
-            return try sealJwe(payload, kid: GVKeys.activeKid)
+            return try sealJwe(payload, kid: GSKeys.activeKid)
         } catch {
-            throw GVError.sealFailed(underlying: error)
+            throw GSError.sealFailed(underlying: error)
         }
     }
 
@@ -116,7 +116,7 @@ public enum GV {
 
     // MARK: - Orchestration
 
-    private static func collectSignals(_ cfg: GVConfig) async -> Signals {
+    private static func collectSignals(_ cfg: GSConfig) async -> Signals {
         let budget = cfg.maxWaitTime
         let persisted = Persistence.trueDeviceId(persist: cfg.persistence)
 
@@ -189,18 +189,18 @@ public enum GV {
             tamper.in_call.map { String($0) } ?? "-",
             tamper.attestation_supported.map { String($0) } ?? "-"
         ].joined(separator: "|")
-        return String(GVRandom.sha256Hex(parts).prefix(32))
+        return String(GSRandom.sha256Hex(parts).prefix(32))
     }
 
     // MARK: - Helpers
 
-    private static func currentConfig() -> GVConfig? {
+    private static func currentConfig() -> GSConfig? {
         stateLock.lock(); defer { stateLock.unlock() }
         return config
     }
 
     private static func log(_ message: String) {
         guard currentConfig()?.debug == true else { return }
-        print("[gv] \(message)")
+        print("[gs] \(message)")
     }
 }
