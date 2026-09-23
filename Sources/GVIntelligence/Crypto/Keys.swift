@@ -6,7 +6,7 @@ import Foundation
 /// (`DEVICE_TOKEN_PRIVATE_KEY_<KID>` secret) and is never shipped to the app.
 ///
 /// IMPORTANT: `n`/`e` and `ACTIVE_KID` MUST stay byte-for-byte identical to
-/// `packages/gs-web-sdk/src/keys.ts` so a token sealed by this iOS SDK decrypts
+/// `packages/gv-web-sdk/src/keys.ts` so a token sealed by this iOS SDK decrypts
 /// with the exact same private key the web SDK's tokens use. During a rotation,
 /// add the new `kid` here while keeping the previous one.
 struct PublicJwk {
@@ -17,7 +17,7 @@ struct PublicJwk {
     let e: String
 }
 
-enum GSKeys {
+enum GVKeys {
     static let activeKid = "v1"
 
     static let publicKeys: [String: PublicJwk] = [

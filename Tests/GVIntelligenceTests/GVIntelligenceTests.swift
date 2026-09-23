@@ -1,8 +1,8 @@
 import XCTest
 import CryptoKit
-@testable import GSIntelligence
+@testable import GVIntelligence
 
-final class GSIntelligenceTests: XCTestCase {
+final class GVIntelligenceTests: XCTestCase {
 
     private func samplePayload() -> TokenPayload {
         var device = DeviceSignals()
@@ -99,7 +99,7 @@ final class GSIntelligenceTests: XCTestCase {
         let wrappedSegment = String(token.split(separator: ".")[1])
         let wrapped = try XCTUnwrap(base64urlDecode(wrappedSegment))
         // RSA-OAEP output size == modulus size. Active key is RSA-4096.
-        let modulus = try XCTUnwrap(base64urlDecode(GSKeys.publicKeys["v1"]!.n))
+        let modulus = try XCTUnwrap(base64urlDecode(GVKeys.publicKeys["v1"]!.n))
         XCTAssertEqual(wrapped.count, modulus.count)
     }
 

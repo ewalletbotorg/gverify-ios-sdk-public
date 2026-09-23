@@ -8,13 +8,13 @@ public enum GPSMode: String {
     case silent
     /// Prompt for permission if undetermined (default).
     case prompt
-    /// Prompt and require a fix; `getSession()` throws `GSError.gpsRequired`
+    /// Prompt and require a fix; `getSession()` throws `GVError.gpsRequired`
     /// when no coordinates are captured.
     case required
 }
 
-/// SDK configuration captured by `GS.configure(...)`.
-public struct GSConfig {
+/// SDK configuration captured by `GV.configure(...)`.
+public struct GVConfig {
     /// Client identifier (used by your backend's API key model; not embedded in
     /// the token — identification happens server-side, exactly like the web SDK).
     public var clientId: String
@@ -51,8 +51,8 @@ public struct GSConfig {
 }
 
 /// Errors surfaced by the public API.
-public enum GSError: Error {
-    /// `getSession()` called before `GS.configure(...)`.
+public enum GVError: Error {
+    /// `getSession()` called before `GV.configure(...)`.
     case notConfigured
     /// `gps: .required` but no coordinates were captured.
     case gpsRequired(permissionState: String?)
